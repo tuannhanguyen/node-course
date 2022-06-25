@@ -10,7 +10,7 @@ const geocode = (address, callback) => {
         } else {
             callback(undefined, {
                 latidute: response.body.features[0].center[1],
-                longitide: response.body.features[0].center[0],
+                longidute: response.body.features[0].center[0],
                 location: response.body.features[0].place_name
             })
         }
