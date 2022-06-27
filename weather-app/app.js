@@ -7,15 +7,15 @@ const address = process.argv[2]
 if (!address) {
     console.log('Please provide an address!')
 } else {
-    geocode(address, (err, data) => {
+    geocode(address, (err, {latitude, longitude, location}) => {
         if (err) {
             return console.log('Error: ', err)
         }
-        forecast(data.latidute, data.longidute, (err, forecastData) => {
+        forecast(latitude, longitude, (err, forecastData) => {
             if (err) {
                 return console.log('Error: ', err)
             }
-            console.log(data.location)
+            console.log(location)
             console.log(forecastData)
         })
     })
