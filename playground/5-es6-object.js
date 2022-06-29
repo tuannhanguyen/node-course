@@ -21,7 +21,7 @@ const product = {
 
 // console.log(rating)
 
-const tracsaction = (type, {label, stock}) => {
+const tracsaction = (type, {label = 'label-default', stock = 2} = {}) => {
     console.log(type, label, stock)
 }
 
