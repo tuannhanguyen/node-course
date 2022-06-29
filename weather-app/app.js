@@ -19,6 +19,5 @@ if (!address) {
             console.log(forecastData)
         })
     })
-    
 }
 
