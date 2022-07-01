@@ -2,6 +2,7 @@
 // const MongoClient = mongodb.MongoClient
 
 const {MongoClient, ObjectID} = require('mongodb')
+const Db = require('mongodb/lib/db')
 
 const id = new ObjectID()
 console.log(id)
@@ -17,51 +18,32 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
 
     const db = client.db(databaseName)
 
-    db.collection('users').insertOne({
-        name: 'John',
-        age: 27
-    }, (error, result) => {
+    db.collection('users').findOne({_id: ObjectID('62bea79016d64432f0827eef')}, (error, user) => {
         if (error) {
-          return  console.log('Unable to insert user')
-        } 
+            return console.log('Unable to fetch')
+        }
 
-        console.log(result.ops)
+        console.log(user)
     })
 
-    db.collection('users').insertMany([
-        {
-            name: 'Nguyen Vo Tuan Nhan',
-            age: 22
-        },
-        {
-            name: 'Huynh Thi My Linh',
-            age: 22
-        }
-    ], (error, result) => {
-        if (error) {
-            return console.log('Unable to insert user')
-        }
-
-        console.log(result.ops)
+    db.collection('users').find({age: 22}).toArray((error, users) => {
+        console.log(users)
     })
 
-    db.collection('tasks').insertMany([
-        {
-            description: 'running',
-            compledted: true
-        }, {
-            description: 'coding',
-            compledted: true
-        }, {
-            description: 'cooking',
-            compledted: false
-        }
-    ], (error, result) => {
+    db.collection('users').find({age: 22}).count((error, count) => {
+        console.log(count)
+    })
+
+    db.collection('tasks').findOne({_id: new ObjectID('62beb3cf1c3aad1cc419d9a1')}, (error, task) => {
         if (error) {
-            return console.log('Unable to insert task')
+            return console.log('Unable to fetch')
         }
 
-        console.log(result.ops)
+        console.log(task)
+    })
+
+    db.collection('tasks').find({compledted: false}).toArray((error, tasks) => {
+        console.log(tasks)
     })
 
 })
