@@ -56,13 +56,25 @@ app.listen(port, () => {
 
 // myFunction()
 
-const pet = {
-    name: 'Hal'
+// const pet = {
+//     name: 'Hal'
+// }
+
+// pet.toJSON = function() {
+//     console.log(this)
+//     return this
+// }
+
+// console.log(JSON.stringify(pet))
+
+const main = async () => {
+    // const task = await Task.findById('62c6ef2d8eadc243d487a4fb')
+    // await task.populate('owner').execPopulate()
+    // console.log(task.owner)
+
+    const user = await User.findById('62c6ece330688c4364f76863')
+    await user.populate('tasks').execPopulate()
+    console.log(user.tasks)
 }
 
-pet.toJSON = function() {
-    console.log(this)
-    return this
-}
-
-console.log(JSON.stringify(pet))
+main()
