@@ -58,9 +58,8 @@ userSchema.methods.generateAuthToken = async function() {
     return token
 }
 
-userSchema.methods.getPublicInfo = async function() {
+userSchema.methods.toJSON = function() {
     const user = this
-
     const userObj = user.toObject()
    
     delete userObj.tokens

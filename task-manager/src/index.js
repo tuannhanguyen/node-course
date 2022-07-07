@@ -33,25 +33,36 @@ app.listen(port, () => {
     console.log("Server on listen " + port)
 })
 
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+// const bcrypt = require('bcryptjs')
+// const jwt = require('jsonwebtoken')
 
-const myFunction = async () => {
-    // const password = 'Nhan@!12345'
-    // const hashedPassword = await bcrypt.hash(password,  8)
+// const myFunction = async () => {
+//     // const password = 'Nhan@!12345'
+//     // const hashedPassword = await bcrypt.hash(password,  8)
     
-    // console.log(password)
-    // console.log(hashedPassword)
+//     // console.log(password)
+//     // console.log(hashedPassword)
 
-    // const isMatch = await bcrypt.compare('Nhan@!12345', hashedPassword)
+//     // const isMatch = await bcrypt.compare('Nhan@!12345', hashedPassword)
 
-    // console.log(isMatch)
+//     // console.log(isMatch)
 
-    const token = jwt.sign({_id: 'abc123'}, 'thisismycourse')
-    console.log(token)
+//     const token = jwt.sign({_id: 'abc123'}, 'thisismycourse')
+//     console.log(token)
 
-    const data = jwt.verify(token, 'thisismycourse')
-    console.log(data)
+//     const data = jwt.verify(token, 'thisismycourse')
+//     console.log(data)
+// }
+
+// myFunction()
+
+const pet = {
+    name: 'Hal'
 }
 
-myFunction()
+pet.toJSON = function() {
+    console.log(this)
+    return this
+}
+
+console.log(JSON.stringify(pet))
