@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Task = require('../models/task')
 
 const userSchema = new mongoose.Schema( {
     name: {
@@ -46,6 +47,8 @@ const userSchema = new mongoose.Schema( {
             required: true
         }
     }]
+}, {
+    timestamps: true
 })
 
 userSchema.methods.generateAuthToken = async function() {
@@ -100,6 +103,12 @@ userSchema.pre('save', async function(next) {
 
     console.log('just before saving!')
 
+    next()
+})
+
+userSchema.pre('remove', async function(next) {
+    const user = this
+    await Task.deleteMany({owner: user._id})
     next()
 })
 
