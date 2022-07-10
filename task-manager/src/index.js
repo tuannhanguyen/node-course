@@ -33,48 +33,28 @@ app.listen(port, () => {
     console.log("Server on listen " + port)
 })
 
-// const bcrypt = require('bcryptjs')
-// const jwt = require('jsonwebtoken')
+const multer = require('multer')
 
-// const myFunction = async () => {
-//     // const password = 'Nhan@!12345'
-//     // const hashedPassword = await bcrypt.hash(password,  8)
-    
-//     // console.log(password)
-//     // console.log(hashedPassword)
+const upload = multer({
+    dest: 'images',
+    limits: {
+        fileSize: 1000000   
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(doc|docx)$/)) {
+            return cb(new Error('Please upload a Word document'))
+        }
 
-//     // const isMatch = await bcrypt.compare('Nhan@!12345', hashedPassword)
+        cb(undefined, true)
+    }
+})
 
-//     // console.log(isMatch)
-
-//     const token = jwt.sign({_id: 'abc123'}, 'thisismycourse')
-//     console.log(token)
-
-//     const data = jwt.verify(token, 'thisismycourse')
-//     console.log(data)
-// }
-
-// myFunction()
-
-// const pet = {
-//     name: 'Hal'
-// }
-
-// pet.toJSON = function() {
-//     console.log(this)
-//     return this
-// }
-
-// console.log(JSON.stringify(pet))
-
-const main = async () => {
-    // const task = await Task.findById('62c6ef2d8eadc243d487a4fb')
-    // await task.populate('owner').execPopulate()
-    // console.log(task.owner)
-
-    const user = await User.findById('62c6ece330688c4364f76863')
-    await user.populate('tasks').execPopulate()
-    console.log(user.tasks)
+const errorMiddleware = () => {
+    throw new Error('From my middleware')
 }
 
-//main()
+app.post('/upload', upload.single('upload'), (req, res) => {
+    res.send()
+}, (error, req, res, next) => {
+    res.status(400).send({error: error.message})
+})
