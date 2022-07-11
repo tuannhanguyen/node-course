@@ -126,6 +126,20 @@ router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) 
     res.status(400).send({error: error.message})
 })
 
+router.get('/users/:id/avatar', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+        if (!user || !user.avatar) {
+            throw new Error()
+        }
+
+        res.set('Content-Type', 'image/jpg')
+        res.send(user.avatar)
+    } catch (error) {
+        res.status(400).send()
+    }
+})
+
 router.delete('/users/me/avatar', auth, async (req, res) => {
     req.user.avatar = undefined
     await req.user.save()
