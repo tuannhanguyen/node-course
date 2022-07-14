@@ -17,8 +17,18 @@ let message = 'Welcome !!!'
 
 io.on('connection', (socket) => {
     socket.emit('message', message)
+    socket.broadcast.emit('message', 'A new user has joined !')
+
     socket.on('sendMessage', (data) => {
         io.emit('message', data)
+    })
+
+    socket.on('sendLocation', (data) => {
+        io.emit('message', `https://map.google.com?q=${data.latitude},${data.longitude}`)
+    })
+
+    socket.on('disconnect', () => {
+        io.emit('message', 'A user has left !')
     })
 })
 
