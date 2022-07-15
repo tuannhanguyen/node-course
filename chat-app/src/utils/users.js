@@ -21,7 +21,7 @@ const addUser = ({id, username, room}) => {
     // Validate username
     if (existingUser) {
         return {
-            error: 'username is in use'
+            error: 'Username is in use'
         }
     }
 
@@ -47,27 +47,6 @@ const getUsersInRoom = (roomName) => {
     roomName = roomName.toLowerCase().trim()
     return users.filter((user) => user.room === roomName)
 }
-
-addUser({
-    id: 245,
-    username: 'Nhan',
-    room: 'hanh thuan'
-})
-
-addUser({
-    id: 246,
-    username: 'Sinh',
-    room: 'hanh thuan'
-})
-
-addUser({
-    id: 247,
-    username: 'Linh',
-    room: 'hanh duc'
-})
-console.log(users)
-const usersInHanhThuan = getUsersInRoom('hanh thuan ')
-console.log(usersInHanhThuan)
 
 module.exports = {
     addUser,
