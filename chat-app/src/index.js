@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
             return callback('Profanity is not allowed !')
         }
         
-        io.emit('message', generateMessage(message))
+        io.to('HT').emit('message', generateMessage(message))
         callback()
     })
 
