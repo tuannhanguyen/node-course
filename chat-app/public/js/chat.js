@@ -7,10 +7,12 @@ const $messageFormButton = $messageForm.querySelector('button')
 const $sendLocationButton = document.querySelector('#send-location')
 const $messages = document.querySelector('#messages')
 const $location = document.querySelector('#location')
+const $sidebar = document.querySelector('#sidebar')
 
 // Templates
 const $messageTemplate = document.querySelector('#message-template').innerHTML
 const $locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
+const $sidebarTemplates = document.querySelector('#sidebar-template').innerHTML
 
 // Options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -20,7 +22,8 @@ socket.on('message', (message) => {
     console.log(message)
     const html = Mustache.render($messageTemplate, {
         message: message.text,
-        createdAt: moment(message.createdAt).format('LT')
+        createdAt: moment(message.createdAt).format('LT'),
+        username: message.username
     })
     $messages.insertAdjacentHTML('beforeend', html)
 })
@@ -29,7 +32,8 @@ socket.on('locationMessage', (message) => {
     console.log(message)
     const html = Mustache.render($locationMessageTemplate, {
         url: message.url,
-        createdAt: moment(message.createdAt).format('LT')
+        createdAt: moment(message.createdAt).format('LT'),
+        username: message.username
     })
     $messages.insertAdjacentHTML('beforeend', html)
 })
@@ -70,6 +74,14 @@ $sendLocationButton.addEventListener('click', (e) => {
             console.log('Location shared !')
         })
     })
+})
+
+socket.on('roomData', ({ room, users}) => {
+    const html = Mustache.render($sidebarTemplates, {
+        room: room,
+        users: users
+    })
+    document.querySelector('#sidebar').innerHTML = html
 })
 
 socket.emit('join', { username, room }, (error) => {
